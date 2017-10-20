@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.a.fatihplayer.MainActivity">
+
+    <ListView
+        android:id="@+id/songLV"
+        style="@style/Widget.AppCompat.ListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageButton
+        android:id="@+id/prevBtn"
+        android:onClick="prevBtnClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="87dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp"
+        app:srcCompat="@drawable/back" />
+
+    <ImageButton
+        android:id="@+id/playBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/play"
+        android:onClick="clickBtn"
+        android:layout_marginRight="59dp"
+        android:layout_marginEnd="59dp"
+        android:layout_alignTop="@+id/prevBtn"
+        android:layout_toLeftOf="@+id/nextBtn"
+        android:layout_toStartOf="@+id/nextBtn" />
+
+    <ImageButton
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/next"
+        android:onClick="nextBtnClick"
+        android:layout_alignTop="@+id/playBtn"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="22dp"
+        android:layout_marginEnd="22dp" />
+
+    <TextView
+        android:id="@+id/startTimeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/prevBtn"
+        android:layout_alignLeft="@+id/prevBtn"
+        android:layout_alignStart="@+id/prevBtn"
+        android:layout_marginBottom="23dp"
+        android:text="@string/firstTime" />
+
+    <SeekBar
+        android:id="@+id/songSB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/startTimeTV"
+        android:layout_toRightOf="@+id/prevBtn" />
+    <TextView
+        android:id="@+id/endTimeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/prevBtn"
+        android:layout_alignLeft="@id/songSB"
+        android:layout_alignStart="@id/songSB"
+        android:layout_marginBottom="23dp"
+        android:text="@string/firstTime"/>
+
+</RelativeLayout>
