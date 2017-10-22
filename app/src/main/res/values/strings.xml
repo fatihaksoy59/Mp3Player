@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">FatihPlayer</string>
     <string name="firstTime">0 min, 0 sec</string>
+    <string name="yes">yes</string>
+    <string name="maybe">maybe</string>
+    <string name="no">no</string>
 </resources>

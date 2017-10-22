@@ -9,70 +9,94 @@
     <ListView
         android:id="@+id/songLV"
         style="@style/Widget.AppCompat.ListView"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/toolbar"/>
 
-    <ImageButton
-        android:id="@+id/prevBtn"
-        android:onClick="prevBtnClick"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="87dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp"
-        app:srcCompat="@drawable/back" />
+        android:background="@color/background_toolbar"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:minHeight="100dp">
 
-    <ImageButton
-        android:id="@+id/playBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/play"
-        android:onClick="clickBtn"
-        android:layout_marginRight="59dp"
-        android:layout_marginEnd="59dp"
-        android:layout_alignTop="@+id/prevBtn"
-        android:layout_toLeftOf="@+id/nextBtn"
-        android:layout_toStartOf="@+id/nextBtn" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageButton
-        android:id="@+id/nextBtn"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/prevBtn"
+                android:onClick="prevBtnClick"
+                android:src="@drawable/selector_previous"
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+            <ImageView
+                android:id="@+id/playBtn"
+                android:onClick="clickBtn"
+                android:src="@drawable/selector_play"
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+            <ImageView
+                android:id="@+id/nextBtn"
+                android:onClick="nextBtnClick"
+                android:src="@drawable/selector_next"
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/next"
-        android:onClick="nextBtnClick"
-        android:layout_alignTop="@+id/playBtn"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="22dp"
-        android:layout_marginEnd="22dp" />
+        android:orientation="horizontal"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center_horizontal">
 
     <TextView
+        android:layout_weight="1"
         android:id="@+id/startTimeTV"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/prevBtn"
-        android:layout_alignLeft="@+id/prevBtn"
-        android:layout_alignStart="@+id/prevBtn"
-        android:layout_marginBottom="23dp"
+        android:gravity="left"
+        android:paddingLeft="5dp"
         android:text="@string/firstTime" />
+
+    <TextView
+        android:layout_weight="1"
+        android:id="@+id/endTimeTV"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:text="@string/firstTime"/>
+
+    </LinearLayout>
 
     <SeekBar
         android:id="@+id/songSB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/startTimeTV"
-        android:layout_toRightOf="@+id/prevBtn" />
-    <TextView
-        android:id="@+id/endTimeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/prevBtn"
-        android:layout_alignLeft="@id/songSB"
-        android:layout_alignStart="@id/songSB"
-        android:layout_marginBottom="23dp"
-        android:text="@string/firstTime"/>
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"/>
+
+    </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
 
 </RelativeLayout>
