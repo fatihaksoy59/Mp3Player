@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -13,14 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -38,7 +34,10 @@ public class MainActivity extends AppCompatActivity {
     int mySongsSize=0;
     private double currentTime=0;
     private double durationTime=0;
+
     ArrayList<String> mySongsName;
+    ArrayList<String> mySongsArtistName;
+    ArrayList<String> mySongsDurationTime;
     ArrayList<String> mySongsLoc;
 
     private Handler myHandler=new Handler();
@@ -58,14 +57,12 @@ public class MainActivity extends AppCompatActivity {
         songsLV=(ListView)findViewById(R.id.songLV);
 
         mySongsName=new ArrayList<>();
+        mySongsArtistName=new ArrayList<>();
+        mySongsDurationTime=new ArrayList<>();
         mySongsLoc=new ArrayList<>();
 
 
-        /*
-        *
-        * Çalma Listesi Oluştur Array List ile
-        *
-        * */
+
 
         getMusic();
 
@@ -80,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         songsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                
+
                 myPosition=position;
                 buttonKontrol();
                 play();
@@ -202,15 +199,32 @@ public class MainActivity extends AppCompatActivity {
 
         if(songCursor!=null &&songCursor.moveToFirst()){
             int songTitle=songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
+            int songArtist=songCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
             int songLocation=songCursor.getColumnIndex(MediaStore.Audio.Media.DATA);
+            int songDuration=songCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             do{
                 String songLoc = songCursor.getString(songLocation);
                 String songTit = songCursor.getString(songTitle);
+                String songArt = songCursor.getString(songArtist);
+                String songDur= songCursor.getString(songDuration);
                 mySongsName.add(songTit);
+                mySongsArtistName.add(songArt);
                 mySongsLoc.add(songLoc);
+                mySongsDurationTime.add(Convertor(songDur));
             }while (songCursor.moveToNext());
         }
         mySongsSize=mySongsName.size();
+    }
+
+    public String Convertor(String sor){
+        double value=Double.parseDouble(sor);
+     String duration=  String.format("%d min, %d sec",
+                TimeUnit.MILLISECONDS.toMinutes((long) value),
+                TimeUnit.MILLISECONDS.toSeconds((long) value) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
+                                toMinutes((long) value)));
+
+        return duration;
     }
 
     private Runnable UpdateSongTime = new Runnable() {

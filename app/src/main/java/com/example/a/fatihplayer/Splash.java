@@ -8,9 +8,6 @@ import android.support.annotation.Nullable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by elfay on 10/22/2017.
- */
 
 public class Splash extends Activity {
 
@@ -25,7 +22,7 @@ public class Splash extends Activity {
         a.schedule(new TimerTask() {
             @Override
             public void run() {
-                startActivity(new Intent(Splash.this,MusicActivity.class));
+                startActivity(new Intent(Splash.this,MainActivity.class));
             }
         },3000);
 
