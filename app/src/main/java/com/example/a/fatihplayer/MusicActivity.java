@@ -11,9 +11,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -21,9 +19,8 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,10 +34,12 @@ import java.util.concurrent.TimeUnit;
     private ImageView playBtn;
     private ImageView nextBtn;
     private ImageView prevBtn;
+    private ImageView shuffleBtn;
     private SeekBar songSB;
 
     int myPosition=0;
     int mySongsSize=0;
+    int randClick=0;
     private double currentTime=0;
     private double durationTime=0;
     ArrayList<String> mySongsName;
@@ -62,6 +61,7 @@ import java.util.concurrent.TimeUnit;
         playBtn=(ImageView)findViewById(R.id.button_play_toggle);
         nextBtn=(ImageView)findViewById(R.id.button_play_next);
         prevBtn=(ImageView)findViewById(R.id.button_play_last);
+        shuffleBtn=(ImageView)findViewById(R.id.button_play_mode_toggle);
         songSB=(SeekBar)findViewById(R.id.seek_bar);
 
 
@@ -75,6 +75,23 @@ import java.util.concurrent.TimeUnit;
         Uri uri =Uri.parse(mySongsLoc.get(myPosition).toString());
         prevBtn.setClickable(false);
         mediaPlayer=MediaPlayer.create(getApplicationContext(),uri);
+
+        songSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mediaPlayer.seekTo(songSB.getProgress());
+            }
+        });
 
     }
 
@@ -176,15 +193,40 @@ import java.util.concurrent.TimeUnit;
         }
     }
 
+    public void randomBtnClick(View view){
+        if(randClick==0){
+
+            shuffleBtn.setImageResource(R.drawable.shuffleclick);
+        randClick++;
+
+        }else {
+            randClick--;
+            shuffleBtn.setImageResource(R.drawable.shuffle);
+        }
+
+    }
+
     public void prevBtnClick(View view){
         myPosition--;
         buttonKontrol();
+        if(randClick==1)
+        {
+            Random rand = new Random();
+            int random=rand.nextInt(mySongsSize-1)+1;
+            myPosition=random;
+        }
         play();
     }
 
     public void nextBtnClick(View view){
         myPosition++;
         buttonKontrol();
+        if(randClick==1)
+        {
+            Random rand = new Random();
+            int random=rand.nextInt(mySongsSize-1)+1;
+            myPosition=random;
+        }
         play();
     }
 

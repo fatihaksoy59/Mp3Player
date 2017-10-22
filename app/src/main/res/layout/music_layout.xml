@@ -19,9 +19,9 @@
 
         <ImageView
             android:id="@+id/image_view_album"
-            android:layout_width="260dp"
+            android:layout_width="280dp"
             android:layout_height="260dp"
-            android:src="@drawable/download"
+            android:src="@drawable/fp"
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
@@ -107,7 +107,8 @@
             android:id="@+id/button_play_mode_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_play_mode_shuffle"
+            android:onClick="randomBtnClick"
+            app:srcCompat="@drawable/shuffle"
             android:background="?attr/selectableItemBackgroundBorderless"
             />
 

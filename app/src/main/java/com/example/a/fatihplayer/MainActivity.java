@@ -1,7 +1,9 @@
 package com.example.a.fatihplayer;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
@@ -18,6 +20,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> mySongsDurationTime;
     ArrayList<String> mySongsLoc;
 
+    ArrayList<MusicModel> mySongModel;
+
+
     private Handler myHandler=new Handler();
 
     @Override
@@ -61,14 +67,16 @@ public class MainActivity extends AppCompatActivity {
         mySongsDurationTime=new ArrayList<>();
         mySongsLoc=new ArrayList<>();
 
-
-
+        mySongModel=new ArrayList<MusicModel>();
 
         getMusic();
 
-        ArrayAdapter<String> adp=new ArrayAdapter<>(this,R.layout.songs_layout,R.id.textView,mySongsName);
-        songsLV.setAdapter(adp);
+       // ArrayAdapter<String> adp=new ArrayAdapter<>(this,R.layout.songs_layout,R.id.textView,mySongsName);
+       // songsLV.setAdapter(adp);
 
+        CustomAdapter adapter = new CustomAdapter(this,mySongModel);
+
+        songsLV.setAdapter(adapter);
 
         Uri uri =Uri.parse(mySongsLoc.get(myPosition).toString());
         prevBtn.setClickable(false);
@@ -79,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 myPosition=position;
+
                 buttonKontrol();
                 play();
             }
@@ -99,6 +108,18 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mediaPlayer.seekTo(songSB.getProgress());
             }
+        });
+
+        nextBtn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.stop();
+                }
+                Intent i=new Intent(getApplicationContext(),MusicActivity.class);
+                startActivity(i);
+                return true;
+            };
         });
 
     }
@@ -187,10 +208,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void nextBtnClick(View view){
+
         myPosition++;
         buttonKontrol();
         play();
     }
+
 
     public void getMusic (){
         ContentResolver contentResolver =getContentResolver();
@@ -208,9 +231,20 @@ public class MainActivity extends AppCompatActivity {
                 String songArt = songCursor.getString(songArtist);
                 String songDur= songCursor.getString(songDuration);
                 mySongsName.add(songTit);
-                mySongsArtistName.add(songArt);
+                if(songArt.length()>30){
+                    mySongsArtistName.add(songArt.substring(0,30));
+                }else{
+                    mySongsArtistName.add(songArt);
+                }
                 mySongsLoc.add(songLoc);
                 mySongsDurationTime.add(Convertor(songDur));
+
+                if(songArt.length()>30){
+                    mySongModel.add(new MusicModel(songTit,songArt.substring(0,30),Convertor(songDur),songLoc));
+                }else{
+                    mySongModel.add(new MusicModel(songTit,songArt,Convertor(songDur),songLoc));
+                }
+
             }while (songCursor.moveToNext());
         }
         mySongsSize=mySongsName.size();

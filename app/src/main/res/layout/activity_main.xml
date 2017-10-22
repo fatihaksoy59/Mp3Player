@@ -14,6 +14,7 @@
         android:paddingTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:listSelector="@color/colorPrimary"
         android:layout_above="@+id/toolbar"/>
 
     <android.support.v7.widget.Toolbar
@@ -54,6 +55,7 @@
             <ImageView
                 android:id="@+id/nextBtn"
                 android:onClick="nextBtnClick"
+                android:longClickable="true"
                 android:src="@drawable/selector_next"
                 android:layout_width="48dp"
                 android:layout_height="48dp" />
